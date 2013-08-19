@@ -19,14 +19,14 @@ void fieldCanvas::setup(int inputwidth, int inputheight)
             //Fieldline cur = new Fieldline(x, y);
             cur.xm = ofRandom(-10, 10);
             cur.ym = ofRandom(-10, 10);
-            cur.color = ofColor(0,0,0,0);
+            cur.color = ofColor(255,127,0,40);
             field.push_back(cur);
         }
     }
 
 
     n = 2000;
-    maxage = 20;
+    maxage = 100;
     rdodge = 80;
     opacity = 40;
     speed = .01;
@@ -73,20 +73,21 @@ void fieldCanvas::draw()
 {
 
     //ofBackground(0);
-    ofSetColor(0,0,0,20);
+    ofSetColor(0,0,0,2);
     ofRect(0,0,w,h);
     ofSetColor(255);
-    ofDrawBitmapString(ofToString(ofGetFrameRate()),20,20);
+    //ofDrawBitmapString(ofToString(ofGetFrameRate()),20,20);
     Fieldline * cur;
 
 
     ofFill();
-    ofSetColor(0,0,0,150);
+    ofSetColor(255,255,255,150);
     for(int i = 0; i < field.size(); i++)
     {
-    ofSetLineWidth(4);
+    ofSetLineWidth(1);
         cur = &field.at(i);
         ofSetColor(cur->color);
+        ofSetColor(0,0,0,0);
         cur->draw();
     }
 
@@ -189,8 +190,7 @@ void fieldCanvas::draw()
     ofPopMatrix();
 
     ofSetColor(255);
-    ofDrawBitmapString(ofToString(ofGetFrameRate()),20,20);
-    ofSetColor(0,6);
+    //ofDrawBitmapString(ofToString(ofGetFrameRate()),20,20);
 }
 
 //--------------------------------------------------------------
@@ -266,7 +266,7 @@ void fieldCanvas::mousePressed(int x, int y, int button)
 {
     if(button == 0) {
     Fieldline mouse(x, y, 0, 0);
-    mouse.color = ofColor(255,0,0,60);
+    mouse.color = ofColor(255,255,255,60);
     control.push_back(mouse);
     }
 
@@ -286,7 +286,7 @@ Fieldline * cur;
     }
 }
 
-float* fieldCanvas::getInterpV(int x, int y)
+ofVec2f fieldCanvas::getInterpV(int x, int y)
 {
 
     int xpos = (float(x) /float(ofGetWidth()))*n_field;
@@ -330,23 +330,13 @@ float* fieldCanvas::getInterpV(int x, int y)
 
         if (length == 0)
         {
-        float* zero = new float[2];
-        zero[0] = 0;
-        zero[1] = 0;
-        return zero;
+        return ofVec2f(0,0);
         }
-
-        float* test = new float[2];
-        test[0] = v_xy_x;
-        test[1] = v_xy_y;
         //float test[2] =
         //{v_xy_x, v_xy_y};
-        return test;
+        return ofVec2f(v_xy_x, v_xy_y);
     }
-        float* zero = new float[2];
-        zero[0] = 0;
-        zero[1] = 0;
-        return zero;
+        return ofVec2f(0,0);
 }
 //--------------------------------------------------------------
 void fieldCanvas::windowResized(int w, int h)
@@ -369,7 +359,7 @@ void fieldCanvas::dragEvent(ofDragInfo dragInfo)
 void fieldCanvas::makepart()
 {
     particles = {};
-    for(int i = 0; i < 200; i++)
+    for(int i = 0; i < 1000; i++)
     {
 
         particles.push_back(ofPoint(ofRandom(0,w), ofRandom(0,h)));
@@ -388,7 +378,7 @@ void fieldCanvas::reset()
 
     t = 58.9;
 
-    ofSeedRandom(t);
+    ofSeedRandom(ofRandom(100));
     cout << t << endl;
     // 58.9 er bra
     ofSetColor(0,5);
@@ -492,7 +482,7 @@ void fieldCanvas::drawfur2( )
             //farge.setBrightness(val1);
             ofSetColor(255,val1);
             //float val1s =  10 - 2*abs(10/2.0 - ofMap((ofClamp(age[i], 0, maxage)),0,maxage,0,10));
-            ofSetLineWidth(3);
+            ofSetLineWidth(1);
             ofLine(p[0],p[1], 0, c[0], c[1],0);
 
             //float val2 =  ofMap(ofClamp(age[i]+1, 0, maxage),0,maxage,0,255);
@@ -505,10 +495,12 @@ void fieldCanvas::drawfur2( )
 
 
             //ofLine(p[0],p[1],-(age[i]-1), c[0], c[1],-age[i]);
-
+            delete c;
         }
 //    stroke(0);
         ofSetColor(255);
     }
+
+
 }
 

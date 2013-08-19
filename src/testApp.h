@@ -20,4 +20,5 @@ class testApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 
 		fieldCanvas field;
+		bool  	bFullscreen;
 };

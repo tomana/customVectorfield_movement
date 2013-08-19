@@ -20,7 +20,7 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
 
-    float* getInterpV(int x, int y);
+    ofVec2f getInterpV(int x, int y);
 
     vector<Fieldline> field;
     vector<Fieldline> control;

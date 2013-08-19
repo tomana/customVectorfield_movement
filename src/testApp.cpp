@@ -3,7 +3,8 @@
 //--------------------------------------------------------------
 void testApp::setup(){
     ofSetVerticalSync(true);
-    field.setup(1024,768);
+    field.setup(1024,600);
+    bFullscreen = false;
 }
 
 //--------------------------------------------------------------
@@ -18,7 +19,23 @@ void testApp::draw(){
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
+
     field.keyPressed(key);
+    	if(key == 'f'){
+
+		bFullscreen = !bFullscreen;
+
+		if(!bFullscreen){
+			ofSetWindowShape(1024,600);
+			ofSetFullscreen(false);
+			// figure out how to put the window in the center:
+			int screenW = ofGetScreenWidth();
+			int screenH = ofGetScreenHeight();
+			ofSetWindowPosition(screenW/2-300/2, screenH/2-300/2);
+		} else if(bFullscreen == 1){
+			ofSetFullscreen(true);
+		}
+	}
 }
 
 //--------------------------------------------------------------
